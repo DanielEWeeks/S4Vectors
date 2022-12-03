@@ -519,6 +519,9 @@ default_extractROWS <- function(x, i)
 {
   if (is.null(x) || missing(i))
     return(x)
+  if (any(sapply(x, inherits, "haven_labelled"))) {
+     x <- haven::zap_labels(x)
+  }    
   ## dynamically call [i,,,..,drop=FALSE] with as many "," as length(dim)-1
   ndim <- max(length(dim(x)), 1L)
   i <- normalizeSingleBracketSubscript(i, x, allow.NAs=TRUE, allow.append=TRUE)
